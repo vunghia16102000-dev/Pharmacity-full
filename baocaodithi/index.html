@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pharmacity+ | Nhà thuốc online</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="baocao.css" />
+  </head>
+
+  <body>
+    <!-- HEADER -->
+    <header class="main-header">
+      <div class="container">
+        <!-- TOP -->
+        <div class="header-top">
+          <!-- LOGO -->
+          <div class="logo" onclick="setCategory(null, 'all')">
+            Pharmacity<span>+</span>
+          </div>
+
+          <!-- SEARCH -->
+          <div class="search-wrapper">
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Tìm dược phẩm..."
+            />
+            <button onclick="handleSearch()">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
+
+          <!-- USER + CART -->
+          <div class="header-tools">
+            <div class="tool-item" onclick="toggleModal('authModal')">
+              <i class="fa fa-user"></i>
+              <span id="userText">Đăng nhập</span>
+            </div>
+
+            <div class="tool-item" onclick="toggleCart()">
+              <i class="fa fa-shopping-cart"></i>
+              <span>Giỏ hàng</span>
+              <span class="cart-count">0</span>
+            </div>
+          </div>
+        </div>
+
+        <nav class="main-nav">
+          <div class="container">
+            <ul class="cat-links">
+              <li class="cat-item active" onclick="setCategory(this, 'all')">
+                <i class="fa fa-border-all"></i> Tất cả
+              </li>
+              <li
+                class="cat-item"
+                onclick="setCategory(this, 'Thuốc không kê đơn')"
+              >
+                <i class="fa fa-pills"></i> Thuốc
+              </li>
+              <li
+                class="cat-item"
+                onclick="setCategory(this, 'Vitamin & Khoáng chất')"
+              >
+                <i class="fa fa-capsules"></i> Thực phẩm chức năng
+              </li>
+              <li class="cat-item" onclick="setCategory(this, 'Dược mỹ phẩm')">
+                <i class="fa fa-spray-can"></i> Dược mỹ phẩm
+              </li>
+              <li
+                class="cat-item"
+                onclick="setCategory(this, 'Chăm sóc sắc đẹp')"
+              >
+                <i class="fa fa-spa"></i> Chăm sóc cá nhân
+              </li>
+              <li
+                class="cat-item"
+                onclick="setCategory(this, 'Sản phẩm tiện lợi')"
+              >
+                <i class="fa fa-kit-medical"></i> Tiện lợi
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="container main-layout">
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <h3>Nhóm sản phẩm</h3>
+
+        <ul>
+          <li onclick="setCategory(this, 'Thuốc không kê đơn')">
+            Thuốc không kê đơn
+          </li>
+          <li onclick="setCategory(this, 'Vitamin & Khoáng chất')">
+            Vitamin & Khoáng chất
+          </li>
+          <li onclick="setCategory(this, 'Dược mỹ phẩm')">Dược mỹ phẩm</li>
+          <li onclick="setCategory(this, 'Chăm sóc sắc đẹp')">
+            Chăm sóc sắc đẹp
+          </li>
+          <li onclick="setCategory(this, 'Sản phẩm tiện lợi')">
+            Sản phẩm tiện lợi
+          </li>
+        </ul>
+      </aside>
+
+      <!-- CONTENT -->
+      <section class="content">
+        <div class="banner-promo">
+          <h2>ƯU ĐÃI THÁNG 4</h2>
+          <p>Giảm giá lên đến 50% sản phẩm chăm sóc sức khỏe</p>
+        </div>
+
+        <div class="section-title">
+          <h3 id="categoryTitle">Tất cả sản phẩm</h3>
+        </div>
+
+        <div id="productGrid" class="product-grid"></div>
+      </section>
+    </main>
+
+    <!-- CART -->
+    <div id="cartSidebar" class="cart-sidebar">
+      <div class="cart-header">
+        <h3>Giỏ hàng</h3>
+        <i class="fa fa-xmark" onclick="toggleCart()"></i>
+      </div>
+
+      <div id="cartItems" class="cart-body"></div>
+
+      <div class="cart-footer">
+        <div>Tổng: <span id="cartTotal">0đ</span></div>
+        <button id="checkoutBtn">
+  Thanh toán
+</button>
+      </div>
+    </div>
+    <div id="authModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-tabs">
+          <div id="tabLogin" class="tab active" onclick="switchTab('login')">
+            Đăng nhập
+          </div>
+          <div id="tabRegister" class="tab" onclick="switchTab('register')">
+            Đăng ký
+          </div>
+        </div>
+
+        <!-- LOGIN -->
+        <form id="loginForm">
+          <input type="text" id="loginUser" placeholder="Tài khoản" required />
+          <input
+            type="password"
+            id="loginPass"
+            placeholder="Mật khẩu"
+            required
+          />
+          <button type="submit" class="btn-auth">Đăng nhập</button>
+        </form>
+
+        <!-- REGISTER -->
+        <form id="registerForm" style="display: none">
+          <input type="text" id="regUser" placeholder="Tài khoản" required />
+          <input type="password" id="regPass" placeholder="Mật khẩu" required />
+          <button type="submit" class="btn-auth">Đăng ký</button>
+        </form>
+      </div>
+    </div>
+    <footer class="main-footer">
+  <div class="container footer-grid">
+    <div>
+      <h3>Pharmacity+</h3>
+      <p>Nhà thuốc trực tuyến uy tín.</p>
+    </div>
+
+    <div>
+      <h4>Hỗ trợ</h4>
+      <ul>
+        <li>Liên hệ</li>
+        <li>Chính sách đổi trả</li>
+      </ul>
+    </div>
+
+    <div>
+      <h4>Kết nối</h4>
+      <ul>
+        <li>Facebook</li>
+        <li>Zalo</li>
+      </ul>
+    </div>
+  </div>
+<div
+  id="userAuthBtn"
+  class="tool-item"
+>
+  <div class="footer-bottom">
+    © 2026 Pharmacity+
+  </div>
+</footer>
+<section
+ id="productSection"
+ class="content"
+>
+    <script src="baocao.js"></script>
+  </body>
+</html>
